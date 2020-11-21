@@ -1,0 +1,50 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    My Feed
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    {% if empty %}
+        <div style="text-align: center;padding-top:15px;">
+            <h3 class="head-text display-4"><i>None of your friends have requested any items!</i></h3>
+            <h6><i><a href="/friends">Add some friends.</a></i></h6>
+        </div>
+    {% else %}
+        <div class="container py-5">
+            <div class="row" id="feed-container">
+                <div class="col-lg-8 mx-auto">
+                    <ul class="list-group shadow">
+                        {% for friend in all_friends %}
+                            {% for item in friend.itemrequest.all %}
+                                <li class="list-group-item">
+                                    <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                                        <div class="media-body order-2 order-lg-1">
+                                            <h5 class="mt-0 font-weight-bold mb-2">{{item.name}}</h5>
+                                            <p class="font-italic text-muted mb-0 small">{{item.description}}</p>
+                                            <div class="d-flex align-items-center justify-content-between mt-1">
+                                                <h6 class="font-weight-bold my-2">Request by: {{item.user.name}}</h6>
+                                            </div>
+                                            <br>
+                                            <form method="post" class="form-group">
+                                                {% csrf_token %}
+                                                <div class="input-group input-group-sm mb-3">
+                                                    {{form.amount}}
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-primary" type="submit" name="fulfill" value="i{{item.id}}">Fulfill Request</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

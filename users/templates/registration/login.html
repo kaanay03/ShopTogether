@@ -1,0 +1,35 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <form method="post" class="indented form-group">
+        {% csrf_token %}
+        {{form|crispy}}
+        <div class="float-right">
+            <a href="/account/reset-password">Forgot Password?</a>
+        </div>
+
+        <p>Don't have an account? Create one <a href="/account/register">here</a>.</p>
+
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+
+    <div class="row r-of3 login_or">
+        <div class="col-xs-12 col-sm-6">
+            <hr class="h_or">
+            <span class="s_or">or</span>
+        </div>
+    </div>
+
+    <div style="text-align: center">
+        <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-lg btn-social btn-facebook">
+        <i class="fa fa-facebook fa-fw"></i>
+        Continue with Facebook
+        </a>
+    </div>
+{% endblock %}

@@ -1,0 +1,150 @@
+* {
+ box-sizing: border-box;
+}
+*:before,
+*:after {
+ box-sizing: border-box;
+}
+html,
+body {
+ height: 100%;
+ position: relative;
+}
+.main-container {
+ min-height: 77vh;
+ overflow: hidden;
+ display: block;
+ position: relative;
+ padding-bottom: 100px;
+}
+footer {
+ position: absolute;
+ bottom: 0;
+ width: 100%;
+}
+
+footer .row {
+ padding-top:20px;
+ padding-bottom: 20px;
+ justify-content: center;
+}
+
+.main-container{
+ padding-top: 30px;
+}
+
+.indented{
+  padding-left: 20%;
+  padding-right: 20%;
+}
+
+.user-dropdown{
+  color:#d9d9d9;
+  padding-right: 20px;
+}
+
+.tab-content{
+    padding-top: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.head-text{
+    font-size: 31px;
+}
+
+#message-container{
+    padding-bottom: 20px;
+}
+
+.friends .fr-list{
+  background: #f8f8f8;
+  border-radius: 4px;
+  border: 1px solid #f1f2f2;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.friends .fr-list .prox{
+  height: 300px;
+  width: 100%;
+  border: none;
+}
+
+.friends .fr-acc{
+  padding: 20px 0;
+  /*border-top: 1px solid #f1f2f2;*/
+  border-bottom: 1px solid #f1f2f2;
+  margin-bottom: 20px;
+}
+
+.feed-container{
+    padding-bottom: 70px;
+}
+
+#content{
+    padding-bottom: 120px;
+}
+
+.btn-facebook {
+    color: #fff !important;
+    background-color: #3b5998;
+    border-color: rgba(0,0,0,0.2);
+}
+
+.btn-social {
+    position: relative;
+    padding-left: 50px;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.btn-social:hover {
+    color: #eee;
+}
+
+.btn-social :first-child {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 40px;
+    padding: 7px;
+    font-size: 1.6em;
+    text-align: center;
+    border-right: 1px solid rgba(0,0,0,0.2);
+}
+
+@media (min-width: 768px) {
+    .r-of3 div:first-child[class*="col-"] {
+        margin-left: 25%;
+    }
+}
+
+.login_or {
+	position: relative;
+	font-size: 1.2em;
+	color: #aaa;
+	margin-top: 2em;
+	margin-bottom: 2em;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+}
+.login_or .h_or {
+	background-color: #cdcdcd;
+	height: 1px;
+	margin-top: 0px !important;
+	margin-bottom: 0px !important;
+}
+.s_or {
+	display: block;
+	position: absolute;
+	left: 50%;
+	top: -0.6em;
+	margin-left: -1.5em;
+	background-color: white;
+	width: 3em;
+	text-align: center;
+}

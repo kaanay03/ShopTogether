@@ -1,0 +1,89 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    Reimbursements
+{% endblock %}
+
+{% block content %}
+    <br>
+    <div style="text-align: center;padding-bottom: 15px;">
+        <h3 class="display-4 head-text">Items Your Friends Bought You</h3>
+        <span class="badge badge-warning">Pending Payment</span>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Item Name</th>
+                            <th scope="col">Bought By</th>
+                            <th scope="col">Amount ($)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if not to_pay %}
+                            <tr>
+                                <td>---</td>
+                                <td>---</td>
+                                <td>---</td>
+                            </tr>
+                        {% else %}
+                            {% for item in to_pay %}
+                                <tr>
+                                    <td>{{item.name}}</td>
+                                    <td>{{item.fulfill_user.name}}</td>
+                                    <td>${{item.amount}}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <br><br><br>
+
+        <div style="text-align: center;padding-bottom: 15px;"><h3 class="display-4 head-text">Items You Bought Your Friends</h3></div>
+
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Item Name</th>
+                            <th scope="col">Bought For</th>
+                            <th scope="col">Amount ($)</th>
+                            <th scope="col">Payment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if not to_be_paid %}
+                            <tr>
+                                <td>---</td>
+                                <td>---</td>
+                                <td>---</td>
+                                <td>---</td>
+                            </tr>
+                        {% else %}
+                            {% for item in to_be_paid %}
+                                <tr>
+                                    <td>{{item.name}}</td>
+                                    <td>{{item.request_user.name}}</td>
+                                    <td>${{item.amount}}</td>
+                                    <td>
+                                        <form method="post" class="form-group">
+                                            {% csrf_token %}
+                                            <div style="text-align: center;"><button type="submit" class="btn btn-primary" name="i{{item.id}}" value="payed">Mark as Paid</button></div>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

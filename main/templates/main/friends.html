@@ -1,0 +1,111 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    Friends
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="panel panel-default indented">
+        <ul class="nav nav-tabs panel-heading">
+            <li class="nav-item"><a class="nav-link active" role="tab" data-toggle="tab" href="#tab-1">My Friends</a></li>
+            <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-2">Friend Requests {% if incoming_requests.count != 0 %}({{incoming_requests.count}}){% endif %}</a></li>
+            <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-3">Add Friends</a></li>
+        </ul>
+        <div class="tab-content panel-body">
+            <div class="tab-pane active" role="tabpanel" id="tab-1">
+                {% if not all_friends %}
+                    <p><i>Add some friends to start shopping together!</i></p>
+                {% else %}
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-8">
+                                {% for friend in all_friends %}
+                                    <div class="friends">
+                                        <div class="fr-acc">
+                                            <div class="row">
+                                                <div class="col-md-7 col-sm-7">
+                                                    <h5 class="profile-link">{{friend.to_user.name}}</h5>
+                                                    <p><i>{{friend.to_user.email}}</i></p>
+                                                </div>
+                                                <div class="col-md-3 col-sm-3">
+                                                    <form method="post" class="form-group">
+                                                        {% csrf_token %}
+                                                        <button class="btn btn-danger pull-right" name="unfriend" value="f{{friend.id}}">Unfriend</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="tab-pane tab-content" role="tabpanel" id="tab-2">
+                <h3 class="display-4 head-text">Incoming Requests</h3>
+                {% if not incoming_requests %}
+                    <p><i>You have no incoming friend requests.</i></p>
+                {% else %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                                {% for request in incoming_requests %}
+                                    <tr>
+                                        <td>{{request.from_user.name}}</td>
+                                        <td>{{request.from_user.email}}</td>
+                                        <td>
+                                            <form method="post">
+                                                {% csrf_token %}
+{#                                                <button type="submit" class="btn btn-primary" name="r{{request.id}}" value="accept">Accept</button>#}
+                                                <button type="submit" class="btn btn-success" name="r{{request.id}}" value="accept"><i class="fas fa-user-check"></i></button>
+                                                <button type="submit" class="btn btn-danger" name="r{{request.id}}" value="decline" id="decline-button"><i class="far fa-trash-alt"></i></button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+
+                <br><br> <!-- Yep! -->
+
+                <h3 class="display-4 head-text">Outgoing Requests</h3>
+                {% if not outgoing_requests %}
+                    <p><i>You have no outgoing friend requests.</i></p>
+                {% else %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                                {% for request in outgoing_requests %}
+                                    <tr>
+                                        <td>{{request.to_user.name}}</td>
+                                        <td>{{request.to_user.email}}</td>
+                                        <td>
+                                            <form method="post">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-danger" name="r{{request.id}}" value="cancel">Cancel</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+
+            </div>
+            <div class="tab-pane tab-content" role="tabpanel" id="tab-3">
+                <form method="post" class="form-group">
+                    {% csrf_token %}
+                    {{add_form|crispy}}
+                    <button type="submit" class="btn btn-primary" name="add_friend" value="add_friend">Send Friend Request</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

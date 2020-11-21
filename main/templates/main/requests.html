@@ -1,0 +1,42 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    My Requests
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <form method="post" class="form-group indented">
+        {% csrf_token %}
+        {{form|crispy}}
+        <button type="submit" class="btn btn-primary" name="add_request" value="add_request">Make Request</button>
+    </form>
+
+    <br><br><br>
+
+    <div class="table-responsive indented">
+        {% if requests %}
+            <h3 class="display-4 head-text">My Active Requests</h3>
+            <table class="table">
+                <tbody>
+                    {% for request in requests %}
+                        <tr>
+                            <td>{{request.name}}</td>
+                            <td>
+                                <form method="post" class="form-group">
+                                    {% csrf_token %}
+                                    <div style="text-align: center;">
+                                        <a href="/requests/edit/{{request.id}}" class="btn btn-primary">Edit</a>
+                                        <button type="submit" class="btn btn-danger" name="r{{request.id}}" value="cancel">Cancel</button>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+    </div>
+{% endblock %}

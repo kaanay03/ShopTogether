@@ -1,0 +1,86 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    Completed Transaction History
+{% endblock %}
+
+{% block content %}
+    <br>
+    <div style="text-align: center;padding-bottom: 15px;">
+        <h3 class="display-4 head-text">Items Your Friends Bought You</h3>
+        <span class="badge badge-success">Payment Completed</span>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Item Name</th>
+                            <th scope="col">Bought By</th>
+                            <th scope="col">Amount Paid ($)</th>
+                            <th scope="col">Date Paid</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if not items_requested %}
+                            <tr>
+                                <td>---</td>
+                                <td>---</td>
+                                <td>---</td>
+                                <td>---</td>
+                            </tr>
+                        {% else %}
+                            {% for item in items_requested %}
+                                <tr>
+                                    <td>{{item.name}}</td>
+                                    <td>{{item.fulfill_user.name}}</td>
+                                    <td>${{item.amount}}</td>
+                                    <td>{{item.date_completed}}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <br><br><br>
+
+        <div style="text-align: center;padding-bottom: 15px;"><h3 class="display-4 head-text">Items You Bought Your Friends</h3></div>
+
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Item Name</th>
+                            <th scope="col">Bought For</th>
+                            <th scope="col">Amount Received ($)</th>
+                            <th scope="col">Date Reimbursed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if not items_bought %}
+                            <tr>
+                                <td>---</td>
+                                <td>---</td>
+                                <td>---</td>
+                                <td>---</td>
+                            </tr>
+                        {% else %}
+                            {% for item in items_bought %}
+                                <tr>
+                                    <td>{{item.name}}</td>
+                                    <td>{{item.request_user.name}}</td>
+                                    <td>${{item.amount}}</td>
+                                    <td>{{item.date_completed}}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
